@@ -66,8 +66,8 @@ function encodeSVG( data ) {
 }
 
 function encodeSVGAlt(svgString) {
-  var uriPayload = svgString.replace(/\n+/g, '') // remove newlines
-    .encodeUriComponent() // encode URL-unsafe characters
+  var uriPayload = svgString.replace(/\n+/g, ''); // remove newlines
+  uriPayload = encodeURIComponent(uriPayload) // encode URL-unsafe characters
     .replace('%20', ' ') // put spaces back in
     .replace('%3D', '=') // ditto equals signs
     .replace('%3A', ':') // ditto colons
