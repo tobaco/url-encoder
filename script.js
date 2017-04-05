@@ -18,7 +18,7 @@ initTar.onchange = function() {
 
 initTar.onkeyup = function() {
     var namespaced = addNameSpace( initTar.value );
-    var escaped = encodeSVG( namespaced );
+    var escaped = encodeSVGAlt( namespaced );
     resTar.value = escaped;
     var resultCss = 'background-image: url("data:image/svg+xml,' + escaped + '");';
     resCssTar.value = resultCss;
@@ -63,6 +63,18 @@ function encodeSVG( data ) {
     data = data.replace( /\s{2,}/g, " " );
 
     return data.replace( symbols, escape );
+}
+
+function encodeSVGAlt(svgString) {
+  var uriPayload = svgString.replace(/\n+/g, '') // remove newlines
+    .encodeUriComponent() // encode URL-unsafe characters
+    .replace('%20', ' ') // put spaces back in
+    .replace('%3D', '=') // ditto equals signs
+    .replace('%3A', ':') // ditto colons
+    .replace('%2F', '/') // ditto slashes
+    .replace('%22', "'"); // replace quotes with apostrophes (may break certain SVGs)
+
+  return uriPayload;
 }
 
 // Common
